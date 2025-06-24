@@ -72,7 +72,7 @@ public class FormTransaksi extends JFrame {
 
         tfNoPasien = new JTextField();
         tfNamaPasien = new JTextField(); tfNamaPasien.setEditable(false);
-        cbSpesialis = new JComboBox<>(new String[]{"Umum", "Gigi", "Saraf"});
+        cbSpesialis = new JComboBox<>();
         cbDokter = new JComboBox<>();
         lblJamPraktek = new JLabel("-");
         cbTipeRawat = new JComboBox<>(new String[]{"Rawat Jalan", "Rawat Inap"});
@@ -82,6 +82,10 @@ public class FormTransaksi extends JFrame {
         cbKonsultasi = new JCheckBox("Konsultasi");
         cbObat = new JCheckBox("Obat");
         tfTotal = new JTextField(); tfTotal.setEditable(false);
+
+        for (String spesialis : dataDokter.keySet()) {
+            cbSpesialis.addItem(spesialis);
+        }
 
         int row = 0;
         gbc.gridx = 0; gbc.gridy = row; formPanel.add(new JLabel("No Pasien"), gbc);
@@ -123,9 +127,7 @@ public class FormTransaksi extends JFrame {
         buttonPanel.setOpaque(false);
 
         RoundedButton btnHitung = new RoundedButton("Hitung", new Color(0x4c9e8e));
-
         RoundedButton btnBayar = new RoundedButton("Bayar", new Color(0x16366e));
-
         RoundedButton btnKeluar = new RoundedButton("Kembali", new Color(0xCB1F1F));
 
         buttonPanel.add(btnHitung);
@@ -172,7 +174,6 @@ public class FormTransaksi extends JFrame {
                 try {
                     String input = JOptionPane.showInputDialog(this, "Jumlah hari rawat inap (maks. 5 hari):");
                     hariInap = Integer.parseInt(input);
-
                     if (hariInap < 1) hariInap = 1;
                     if (hariInap > 5) {
                         JOptionPane.showMessageDialog(this, "Maksimal 5 hari rawat inap. Ditetapkan menjadi 5 hari.");
@@ -211,14 +212,33 @@ public class FormTransaksi extends JFrame {
     }
 
     private void initData() {
-        dataDokter.put("Umum", List.of(new Dokter("Dr. Andi", "Umum", "08.00", "15.00"),
+        dataDokter.put("Umum", List.of(
+                new Dokter("Dr. Andi", "Umum", "08.00", "15.00"),
                 new Dokter("Dr. Budi", "Umum", "16.00", "23.00")));
-        dataDokter.put("Gigi", List.of(new Dokter("Drg. Citra", "Gigi", "08.00", "15.00"),
+        dataDokter.put("S.Gigi", List.of(
+                new Dokter("Drg. Citra", "Gigi", "08.00", "15.00"),
                 new Dokter("Drg. Dini", "Gigi", "16.00", "23.00")));
-        dataDokter.put("Saraf", List.of(new Dokter("Dr. Eko", "Saraf", "08.00", "15.00"),
+        dataDokter.put("S.Saraf", List.of(
+                new Dokter("Dr. Eko", "Saraf", "08.00", "15.00"),
                 new Dokter("Dr. Farid", "Saraf", "16.00", "23.00")));
+        dataDokter.put("S.Anak", List.of(
+                new Dokter("Dr. Mulyono", "S.Anak", "08.00", "15.00"),
+                new Dokter("Dr. Sutopo", "S.Anak", "16.00", "23.00")));
+        dataDokter.put("S.Penyakit Dalam", List.of(
+                new Dokter("Dr. Jo", "S.Penyakit Dalam", "08.00", "15.00"),
+                new Dokter("Dr. Al", "S.Penyakit Dalam", "16.00", "23.00")));
+        dataDokter.put("S.Bedah Umum", List.of(
+                new Dokter("Dr. Yeni", "S.Bedah Umum", "08.00", "15.00"),
+                new Dokter("Dr. Sinta", "S.Bedah Umum", "16.00", "23.00")));
+        dataDokter.put("S.Obgyn", List.of(
+                new Dokter("Dr. Yuli", "S.Obgyn", "08.00", "15.00"),
+                new Dokter("Dr. Cantika", "S.Obgyn", "16.00", "23.00")));
+        dataDokter.put("S.Radiologi", List.of(
+                new Dokter("Dr. Yogi", "S.Radiologi", "08.00", "15.00"),
+                new Dokter("Dr. Richard", "S.Radiologi", "16.00", "23.00")));
 
-        dataKamar = List.of(new Kamar("Kelas 1", 300000, 0.3),
+        dataKamar = List.of(
+                new Kamar("Kelas 1", 300000, 0.3),
                 new Kamar("Kelas 2", 500000, 0.2),
                 new Kamar("Kelas 3", 700000, 0.1),
                 new Kamar("VIP", 1000000, 0.05));
